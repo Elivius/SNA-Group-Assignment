@@ -296,6 +296,84 @@ A successful TLS connection will show a line containing `TLS connection establis
 
 ---
 
+## Troubleshooting
+
+### SELinux Blocking Certificate Access
+
+**When to apply this fix:** Rocky Linux runs SELinux in enforcing mode by default. Even if your Unix file permissions (`chmod`/`chown`) are correct, SELinux maintains a separate layer of access control based on file labels. If Postfix or Dovecot were given the wrong SELinux label when the certificate files were created, the services will be blocked from reading them and will fail to start.
+
+**How to spot the problem — check the mail log:**
+
+```bash
+sudo tail -50 /var/log/maillog
+```
+
+Look for any of these error messages:
+
+```
+# Postfix cannot read the private key:
+postfix/smtpd: cannot load certificate authority data: disabling TLS support
+postfix/smtpd: warning: cannot get RSA private key from file /etc/ssl/mail/mailserver.key: disabling TLS support
+
+# Dovecot cannot read the certificate or key:
+dovecot: ssl-params: Fatal: Failed to read file /etc/ssl/mail/mailserver.key: Permission denied
+dovecot: master: Error: service(imap-login) initialization failed, waited 0 secs
+dovecot: imap-login: Fatal: Failed to initialize SSL server context
+```
+
+**How to spot the problem — check SELinux audit log:**
+
+```bash
+sudo cat /var/log/audit/audit.log | grep denied | grep ssl
+```
+
+If SELinux is the cause, you will see lines like:
+
+```
+type=AVC msg=audit(...): avc: denied { read } for pid=... comm="smtpd"
+name="mailserver.key" dev="..." ino=...
+scontext=system_u:system_r:postfix_smtpd_t:s0
+tcontext=system_u:object_r:user_home_t:s0 tclass=file
+```
+
+The key part is `tcontext=...user_home_t` — this means the file has the wrong label (`user_home_t`) instead of the correct one (`cert_t`).
+
+**The fix:**
+
+```bash
+sudo restorecon -Rv /etc/ssl/mail/
+```
+
+This resets the SELinux labels on all files inside `/etc/ssl/mail/` to the correct policy context (`cert_t`), which Postfix and Dovecot are permitted to read.
+
+**Verify the fix worked:**
+
+```bash
+ls -Z /etc/ssl/mail/
+```
+
+Expected output — both files must show `cert_t`:
+
+```
+system_u:object_r:cert_t:s0 mailserver.crt
+system_u:object_r:cert_t:s0 mailserver.key
+```
+
+Then restart both services:
+
+```bash
+sudo systemctl restart postfix dovecot
+sudo systemctl status postfix dovecot
+```
+
+Check the mail log once more to confirm the TLS errors are gone:
+
+```bash
+sudo tail -20 /var/log/maillog
+```
+
+---
+
 ## References
 
 - Red Hat System Administration (RH124)
