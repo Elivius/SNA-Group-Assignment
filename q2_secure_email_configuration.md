@@ -92,6 +92,7 @@ inet_interfaces = all # <- uncomment this
 # comment out inet_interfaces = localhost
 mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain # <- uncomment this
 # comment out mydestination = $myhostname, localhost.$mydomain, localhost
+mynetworks = 192.168.200.0/24, 127.0.0.0/8
 home_mailbox = Maildir/
 smtpd_tls_cert_file = /etc/ssl/mail/mailserver.crt
 smtpd_tls_key_file = /etc/ssl/mail/mailserver.key
