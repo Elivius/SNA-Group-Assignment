@@ -116,6 +116,7 @@ Find the line beginning with `#submission` and **uncomment and edit** it to look
 submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
   -o smtpd_tls_security_level=encrypt
+  -o smtpd_sasl_auth_enable=yes
 ```
 
 > **Important:** The two continuation lines must be indented with **spaces** (not tabs), and there must be **no blank line** between them and the `submission` line.
