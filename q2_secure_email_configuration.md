@@ -250,7 +250,7 @@ Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird se
 | Field | Value |
 |---|---|
 | Protocol | IMAP |
-| Server Hostname | `server.kawkaw.com` |
+| Server Hostname | `192.168.200.3` |
 | Port | `143` |
 | Connection Security | `STARTTLS` |
 | Authentication | `Normal password` |
@@ -260,7 +260,7 @@ Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird se
 
 | Field | Value |
 |---|---|
-| Server Hostname | `server.kawkaw.com` |
+| Server Hostname | `192.168.200.3` |
 | Port | `587` |
 | Connection Security | `STARTTLS` |
 | Authentication | `Normal password` |
