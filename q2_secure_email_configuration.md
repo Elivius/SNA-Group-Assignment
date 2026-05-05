@@ -88,8 +88,10 @@ Add or modify the following lines:
 myhostname = server.kawkaw.com
 mydomain = kawkaw.com
 myorigin = $mydomain
-inet_interfaces = all
-mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+inet_interfaces = all # <- uncomment this
+# comment out inet_interfaces = localhost
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain # <- uncomment this
+# comment out mydestination = $myhostname, localhost.$mydomain, localhost
 home_mailbox = Maildir/
 smtpd_tls_cert_file = /etc/ssl/mail/mailserver.crt
 smtpd_tls_key_file = /etc/ssl/mail/mailserver.key
