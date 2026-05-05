@@ -254,6 +254,7 @@ Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird se
 | Port | `143` |
 | Connection Security | `STARTTLS` |
 | Authentication | `Normal password` |
+| Username | `mailuser1` |
 
 **Outgoing Mail (SMTP):**
 
@@ -263,6 +264,7 @@ Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird se
 | Port | `587` |
 | Connection Security | `STARTTLS` |
 | Authentication | `Normal password` |
+| Username | `mailuser1` |
 
 4. Click **Done** (or **Re-test** first to confirm connectivity).
 
