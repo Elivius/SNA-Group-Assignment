@@ -148,7 +148,7 @@ sudo nano /etc/dovecot/conf.d/10-ssl.conf
 Set or modify:
 
 ```ini
-ssl = yes
+ssl = required
 ssl_cert = </etc/ssl/mail/mailserver.crt
 ssl_key = </etc/ssl/mail/mailserver.key
 ```
