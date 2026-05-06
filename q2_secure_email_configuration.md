@@ -221,23 +221,7 @@ sudo apt install thunderbird -y
 
 ---
 
-### Step 2: Add DNS server
-
-```bash
-sudo nano /etc/hosts
-```
- 
-Add:
- 
-```
-192.168.200.3   server.kawkaw.com
-```
- 
-Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird server hostname fields instead of the hostname. Both approaches work identically.
-
----
-
-### Step 3: Configure Account in Thunderbird
+### Step 2: Configure Account in Thunderbird
 
 1. Launch **Thunderbird**.
 2. Go to **Account Setup** and enter:
@@ -271,7 +255,7 @@ Alternatively, use the IP address `192.168.200.3` directly in the Thunderbird se
 
 ---
 
-### Step 4: Accept the Self-Signed Certificate
+### Step 3: Accept the Self-Signed Certificate
 
 Because the certificate is self-signed, Thunderbird will show an **"Unknown Certificate"** security warning.
 
@@ -283,7 +267,7 @@ Because the certificate is self-signed, Thunderbird will show an **"Unknown Cert
 
 ---
 
-### Step 5: Validation
+### Step 4: Validation
 
 **Send a test email:**
 
