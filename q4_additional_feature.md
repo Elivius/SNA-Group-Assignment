@@ -690,6 +690,38 @@ Refresh the browser.
 
 ---
 
+## Appendix: Podman Quick Reference Cheat Sheet
+
+Use these commands on the Rocky Linux server to manage your application stack during the demo.
+
+### 1. Status & Verification
+*   **List all Pods**: `podman pod ls`
+*   **List all Containers**: `podman ps -a`
+*   **View containers organized by Pod**: `podman ps --pod`
+
+### 2. Managing the Entire Stack (Recommended)
+Starting or stopping the Pod automatically handles all containers inside it.
+*   **Start everything**: `podman pod start web-stack`
+*   **Stop everything**: `podman pod stop web-stack`
+*   **Restart everything**: `podman pod restart web-stack`
+
+### 3. Managing Individual Containers
+*   **Start Flask only**: `podman start flask-app-container`
+*   **Stop Flask only**: `podman stop flask-app-container`
+*   **Start MariaDB only**: `podman start db-server-container`
+*   **Stop MariaDB only**: `podman stop db-server-container`
+
+### 4. Monitoring & Troubleshooting
+*   **Follow live Flask logs**: `podman logs -f flask-app-container`
+*   **Follow live MariaDB logs**: `podman logs -f db-server-container`
+*   **Inspect Pod details**: `podman pod inspect web-stack`
+
+### 5. Emergency Cleanup (Deletes everything)
+*   **Remove Pod and Containers**: `podman pod rm -f web-stack`
+*   **Remove Volume**: `podman volume rm mariadb_data`
+
+---
+
 ## References
 
 - Podman Documentation: https://docs.podman.io/
