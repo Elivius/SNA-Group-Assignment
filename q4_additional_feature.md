@@ -484,6 +484,10 @@ Open **Firefox** on the Ubuntu client and go to:
 
 ```
 http://192.168.200.3:8080/register
+
+or
+
+http://server.kawkaw.com:8080/register
 ```
 
 1. Enter a **Username** (e.g. `student1`) and a **Password**.
@@ -500,6 +504,10 @@ Navigate to:
 
 ```
 http://192.168.200.3:8080/login
+
+or
+
+http://server.kawkaw.com:8080/login
 ```
 
 1. Enter the same username and password used during registration.
@@ -516,6 +524,10 @@ Navigate to:
 
 ```
 http://192.168.200.3:8080/users
+
+or
+
+http://server.kawkaw.com:8080/users
 ```
 
 This page queries the `sna_project.users` table directly and displays every registered user with their ID and registration timestamp. The password column is intentionally excluded — only the hashed value is stored in the database, never the plaintext password.
@@ -530,6 +542,10 @@ Open Firefox and go to:
 
 ```
 https://192.168.200.3:9090
+
+Or
+
+https://server.kawkaw.com:9090
 ```
 
 1. Accept the self-signed certificate warning (**Advanced → Accept the Risk and Continue**).
