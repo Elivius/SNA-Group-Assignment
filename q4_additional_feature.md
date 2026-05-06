@@ -120,7 +120,7 @@ xxxxxxxxxxxx  web-stack  Created   xxxxxxxxxxxx
 
 ```bash
 podman run -d --pod web-stack \
-  --name db-server \
+  --name db-server-container \
   -e MARIADB_ROOT_PASSWORD=apu_admin_123 \
   -e MARIADB_DATABASE=sna_project \
   -v mariadb_data:/var/lib/mysql:Z \
@@ -132,7 +132,7 @@ podman run -d --pod web-stack \
 **Wait for MariaDB to be ready before continuing:**
 
 ```bash
-podman logs -f db-server
+podman logs -f db-server-container
 ```
 
 Press `Ctrl+C` once you see:
@@ -445,7 +445,7 @@ You should see `localhost/flask-app` in the list.
 
 ```bash
 podman run -d --pod web-stack \
-  --name flask-app \
+  --name flask-app-container \
   flask-app
 ```
 
@@ -455,7 +455,7 @@ podman run -d --pod web-stack \
 podman ps --pod
 ```
 
-Both `db-server` and `flask-app` should show status `Up`.
+Both `db-server-container` and `flask-app-container` should show status `Up`.
 
 ---
 
@@ -551,8 +551,8 @@ https://server.kawkaw.com:9090
 1. Accept the self-signed certificate warning (**Advanced → Accept the Risk and Continue**).
 2. Log in with the Rocky Linux server credentials.
 3. In the left sidebar, click **Podman containers**.
-4. Both `db-server` and `flask-app` will be visible as **Running** inside the `web-stack` pod.
-5. Click `flask-app` → **Logs** to view live application output including each login and register request.
+4. Both `db-server-container` and `flask-app-container` will be visible as **Running** inside the `web-stack` pod.
+5. Click `flask-app-container` → **Logs** to view live application output including each login and register request.
 
 ---
 
@@ -621,7 +621,7 @@ sudo systemctl status pod-web-stack.service
 MariaDB may still be initialising. Wait 20 seconds and refresh. Check its status:
 
 ```bash
-podman logs db-server | tail -20
+podman logs db-server-container | tail -20
 ```
 
 Wait for `ready for connections` to appear before using the app.
@@ -633,29 +633,29 @@ Wait for `ready for connections` to appear before using the app.
 Check the logs:
 
 ```bash
-podman logs flask-app
+podman logs flask-app-container
 ```
 
 If you see an image error, the build in Step 6d did not complete. Re-run:
 
 ```bash
 podman build -t flask-app ~/flask-app/
-podman run -d --pod web-stack --name flask-app flask-app
+podman run -d --pod web-stack --name flask-app-container flask-app
 ```
 
 ---
 
 ### SELinux Blocking MariaDB Volume Write
 
-**Symptom:** `podman logs db-server` shows permission errors on `/var/lib/mysql`.
+**Symptom:** `podman logs db-server-container` shows permission errors on `/var/lib/mysql`.
 
 **Fix:** The `:Z` flag must be present on the volume mount. Remove and recreate:
 
 ```bash
-podman stop db-server && podman rm db-server
+podman stop db-server-container && podman rm db-server-container
 podman volume rm mariadb_data
 podman run -d --pod web-stack \
-  --name db-server \
+  --name db-server-container \
   -e MARIADB_ROOT_PASSWORD=apu_admin_123 \
   -e MARIADB_DATABASE=sna_project \
   -v mariadb_data:/var/lib/mysql:Z \
